@@ -1,0 +1,25 @@
+<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
+<idea-plugin>
+  <name>Snipplr API</name>
+  <description>A plugin that allow the user to get and add code to the Snipplr</description>
+  <version>1.0</version>
+  <vendor>Rayala Udayakumar</vendor>
+  <idea-version since-build="3000"/>
+    <application-components>
+        <component>
+            <implementation-class>com.ruk.applications.snipplr.SnipplrApplicationComponent</implementation-class>
+        </component>
+    </application-components>
+    <actions>
+        <action id="ruk.snipplr.get" class="com.ruk.applications.snipplr.GetCodeAction" text="Get Code From Snipplr"
+                description="Get Code From Snipplr">
+            <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt G"/>
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+        <action id="ruk.snipplr.post" class="com.ruk.applications.snipplr.PostCodeAction" text="Post Code to Snipplr"
+                description="Post Code to Snipplr">
+            <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt P"/>
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+    </actions>
+</idea-plugin>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="module_snipplrplugin" default="compile.module.snipplrplugin">
+  <dirname property="module.snipplrplugin.basedir" file="${ant.file.module_snipplrplugin}"/>
+  
+  <property name="module.jdk.home.snipplrplugin" value="${jdk.home.idea_7590}"/>
+  <property name="module.jdk.bin.snipplrplugin" value="${jdk.bin.idea_7590}"/>
+  <property name="module.jdk.classpath.snipplrplugin" value="jdk.classpath.idea_7590"/>
+  
+  <property name="compiler.args.snipplrplugin" value="${compiler.args}"/>
+  
+  <property name="snipplrplugin.output.dir" value="${module.snipplrplugin.basedir}/out/production/SnipplrPlugin"/>
+  <property name="snipplrplugin.testoutput.dir" value="${module.snipplrplugin.basedir}/out/test/SnipplrPlugin"/>
+  
+  <path id="snipplrplugin.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="snipplrplugin.module.classpath">
+    <path refid="${module.jdk.classpath.snipplrplugin}"/>
+    <pathelement location="${module.snipplrplugin.basedir}/../../../Tools/xmlrpc-2.0/xmlrpc-2.0.jar"/>
+  </path>
+  
+  <path id="snipplrplugin.runtime.module.classpath">
+    <path refid="${module.jdk.classpath.snipplrplugin}"/>
+    <pathelement location="${module.snipplrplugin.basedir}/../../../Tools/xmlrpc-2.0/xmlrpc-2.0.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.snipplrplugin">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.snipplrplugin">
+    <patternset refid="excluded.from.module.snipplrplugin"/>
+  </patternset>
+  
+  <path id="snipplrplugin.module.sourcepath">
+    <dirset dir="${module.snipplrplugin.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.snipplrplugin" depends="compile.module.snipplrplugin.production,compile.module.snipplrplugin.tests" description="Compile module SnipplrPlugin"/>
+  
+  <target name="compile.module.snipplrplugin.production" description="Compile module SnipplrPlugin; production classes">
+    <mkdir dir="${snipplrplugin.output.dir}"/>
+    <javac2 destdir="${snipplrplugin.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.snipplrplugin}/javac">
+      <compilerarg line="${compiler.args.snipplrplugin}"/>
+      <bootclasspath refid="snipplrplugin.module.bootclasspath"/>
+      <classpath refid="snipplrplugin.module.classpath"/>
+      <src refid="snipplrplugin.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.snipplrplugin"/>
+    </javac2>
+    
+    <copy todir="${snipplrplugin.output.dir}">
+      <fileset dir="${module.snipplrplugin.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.snipplrplugin.tests" depends="compile.module.snipplrplugin.production" description="compile module SnipplrPlugin; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.snipplrplugin" description="cleanup module">
+    <delete dir="${snipplrplugin.output.dir}"/>
+    <delete dir="${snipplrplugin.testoutput.dir}"/>
+  </target>
+  
+  <property name="snipplrplugin.plugin.exploded.dir" value="${module.snipplrplugin.basedir}/../../../../Documents and Settings/rudayaku/.IntelliJIdea70/system/plugins-sandbox/plugins/SnipplrPlugin"/>
+  <property name="snipplrplugin.path.jar" value="${module.snipplrplugin.basedir}/SnipplrPlugin.zip"/>
+  <target name="plugin.build.snipplrplugin" depends="compile.module.snipplrplugin" description="Build configured plugin directories and archives for module 'SnipplrPlugin'">
+    <antcall target="plugin.build.exploded.snipplrplugin">
+      <param name="plugin.dir.exploded" value="${snipplrplugin.plugin.exploded.dir}"/>
+    </antcall>
+    <antcall target="plugin.build.jar.snipplrplugin">
+      <param name="plugin.path.jar" value="${snipplrplugin.path.jar}"/>
+    </antcall>
+  </target>
+  
+  <!-- Call the target to build exploded directory for module 'SnipplrPlugin'.\n       Path to the exploded directory is specified by parameter 'plugin.dir.exploded' -->
+  <target name="plugin.build.exploded.snipplrplugin" description="Plugin exploded directory for module 'SnipplrPlugin'">
+    <copy file="${module.snipplrplugin.basedir}/../../../Tools/xmlrpc-2.0/xmlrpc-2.0.jar" tofile="${plugin.dir.exploded}/lib/xmlrpc-2.0.jar"/>
+    <copy todir="${plugin.dir.exploded}/classes">
+      <fileset dir="${module.snipplrplugin.basedir}/out/production/SnipplrPlugin"/>
+    </copy>
+    <copy file="${module.snipplrplugin.basedir}/META-INF/plugin.xml" tofile="${plugin.dir.exploded}/META-INF/plugin.xml"/>
+  </target>
+  
+  <!-- Call the target to build archive for module 'SnipplrPlugin'.\n       Path to the archive file is specified by parameter 'plugin.path.jar' -->
+  <target name="plugin.build.jar.snipplrplugin" description="Build plugin archive for module 'SnipplrPlugin'">
+    <property name="tmp.dir.snipplrplugin" value="${module.snipplrplugin.basedir}/../temp"/>
+    <mkdir dir="${tmp.dir.snipplrplugin}"/>
+    <mkdir dir="${tmp.dir.snipplrplugin}/lib"/>
+    <jar destfile="${tmp.dir.snipplrplugin}/lib/SnipplrPlugin.jar" duplicate="preserve">
+      <zipfileset dir="${module.snipplrplugin.basedir}/out/production/SnipplrPlugin" prefix=""/>
+      <zipfileset file="${module.snipplrplugin.basedir}/META-INF/plugin.xml" prefix="META-INF"/>
+      <manifest>
+        <attribute name="Created-By" value="IntelliJ IDEA"/>
+        <attribute name="Manifest-Version" value="1.0"/>
+      </manifest>
+    </jar>
+    <copy file="${module.snipplrplugin.basedir}/../../../Tools/xmlrpc-2.0/xmlrpc-2.0.jar" tofile="${tmp.dir.snipplrplugin}/lib/xmlrpc-2.0.jar"/>
+    <zip destfile="${snipplrplugin.path.jar}">
+      <fileset dir="${module.snipplrplugin.basedir}/../temp"/>
+    </zip>
+    <delete dir="${tmp.dir.snipplrplugin}"/>
+  </target>
+</project>

@@ -1,10 +1,11 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
-<idea-plugin>
-  <name>Snipplr API</name>
-  <description>A plugin that allow the user to get and add code to the Snipplr</description>
-  <version>1.0</version>
-  <vendor>Rayala Udayakumar</vendor>
-  <idea-version since-build="3000"/>
+<idea-plugin version="2">
+    <name>Snipplr API</name>
+    <description>A plugin that allow the user to get and add code to the Snipplr</description>
+    <version>2.0</version>
+    <vendor>Rayala Udayakumar</vendor>
+    <depends>com.intellij.modules.xml</depends>
+    <idea-version since-build="3000"/>
     <application-components>
         <component>
             <implementation-class>com.ruk.applications.snipplr.SnipplrApplicationComponent</implementation-class>
